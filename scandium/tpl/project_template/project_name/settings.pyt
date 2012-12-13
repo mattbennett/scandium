@@ -1,4 +1,4 @@
 # Put configuration options in here
 
-STATIC_ROOT = ('{{project_name}}', 'static')
-TEMPLATE_ROOT = ('{{project_name}}', 'templates')
+STATIC_RESOURCE = ('{{project_name}}', 'static')	  	# Default static location
+TEMPLATE_RESOURCE = ('{{project_name}}', 'templates')	# Default template location

@@ -38,7 +38,7 @@ class Browser(QWebView):
         
         if icon:
             pixmap = QtGui.QPixmap()
-            if type(icon) == tuple:  # package, not file path
+            if type(icon) == tuple:  # package, not filepath
                 img_data = pkgutil.get_data(*icon)
             else:
                 with open(icon) as fh:
@@ -60,8 +60,8 @@ class Config(object):
     DEBUG = True
     FLASK_DEBUG = True
     HTTP_PORT = 8080
-    STATIC_ROOT = 'static'
-    TEMPLATE_ROOT = 'templates'
+    STATIC_RESOURCE = None
+    TEMPLATE_RESOURCE = None
     ALLOW_DEFERREDS = True
     ICON_RESOURCE = None
     WINDOW_TITLE = "Scandium Browser"
@@ -104,13 +104,19 @@ class Harness():
     def _create_app(self):
         app = Flask(__name__)
         app.debug = self.conf.FLASK_DEBUG
+        
+        if not self.conf.STATIC_RESOURCE:
+            raise Exception('STATIC_RESOURCE setting not configured.')
+        if not self.conf.TEMPLATE_RESOURCE:
+            raise Exception('TEMPLATE_RESOURCE setting not configured.')
+        
         app.wsgi_app = SharedDataMiddleware(app.wsgi_app, {
-            '/': self.conf.STATIC_ROOT
+            '/': self.conf.STATIC_RESOURCE
         })
-        if type(self.conf.TEMPLATE_ROOT) == tuple:  # package, not file path
-            app.jinja_loader = PackageLoader(*self.conf.TEMPLATE_ROOT)
+        if type(self.conf.TEMPLATE_RESOURCE) == tuple:  # package, not filepath
+            app.jinja_loader = PackageLoader(*self.conf.TEMPLATE_RESOURCE)
         else:
-            app.jinja_loader = FileSystemLoader(self.conf.TEMPLATE_ROOT)
+            app.jinja_loader = FileSystemLoader(self.conf.TEMPLATE_RESOURCE)
         if self.conf.ALLOW_DEFERREDS:
             self._enable_deferreds(app)
         return app
