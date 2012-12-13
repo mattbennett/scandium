@@ -3,8 +3,6 @@ import sys
 import fnmatch
 from setuptools import setup, find_packages
 
-import scandium
-
 
 def find_package_data(package, *paths):
     data = {package: []}
@@ -16,10 +14,9 @@ def find_package_data(package, *paths):
     return data
     
 NAME = "scandium"
-VERSION = scandium.__version__
-INCLUDES = ['twisted.web.resource', 'jinja2.ext', 'PySide.QtNetwork']
+VERSION = '0.0.1'
 PACKAGES = find_packages(exclude="tests")
-PACKAGE_DATA_DIRS = ('static', 'templates')
+PACKAGE_DATA_DIRS = ('tpl',)
 PACKAGE_DATA = find_package_data((NAME,) + PACKAGE_DATA_DIRS)
 
 AUTHOR = "Matt Bennett"
@@ -28,7 +25,6 @@ KEYWORDS = "scandium web desktop application"
 DESCRIPTION = "A toolkit for transformation webapps into "\
               "desktop applications under QtWebKit."
 LICENSE = "BSD"
-LONG_DESC = open(os.path.join(os.path.dirname(__file__), 'README')).read()
 
 extra_cfg = {}
 
@@ -86,21 +82,9 @@ setup(
     description = DESCRIPTION,
     license = LICENSE,
     keywords = KEYWORDS,
-    packages=PACKAGES,
-    package_data=PACKAGE_DATA,
-    include_package_data=True,
-    options = {
-        "py2exe": {
-            "compressed": 1,
-            "optimize": 1,
-            "ascii": 0,
-            "bundle_files": 1,
-            "packages": PACKAGES,
-            "includes": INCLUDES,
-            'dll_excludes': ['w9xpopen.exe']
-        }
-    },
-    long_description=LONG_DESC,
+    packages = PACKAGES,
+    package_data = PACKAGE_DATA,
+    include_package_data = True,
     classifiers=[
         #
     ],

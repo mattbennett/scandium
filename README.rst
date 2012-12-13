@@ -51,7 +51,7 @@ DEBUG
 
 Debug flag for the Scandium app. Enables 
 
-Default: True
+Default: ``True``
 
 
 FLASK_DEBUG
@@ -59,14 +59,14 @@ FLASK_DEBUG
 
 Sets the debug flag on the Flask app. Enables in-browser tracebacks etc.
 
-Default: True
+Default: ``True``
 
 HTTP_PORT
 ^^^^^^^^^
 
 Port to listen for HTTP connections.
 
-Default: 8080
+Default: ``8080``
 
 STATIC_RESOURCE
 ^^^^^^^^^^^^^^^
@@ -74,7 +74,7 @@ STATIC_RESOURCE
 Defines where to find static resources. Can be a filepath or a tuple of (package, directoryname). You must use the latter format if you want to deploy your application using a compressed or bundled distributable.
 The default value for this setting is defined in settings.py because the project name is required.
 
-Default: (projectname, 'static') [package resource]
+Default: ``(projectname, 'static')``
 
 TEMPLATE_RESOURCE
 ^^^^^^^^^^^^^
@@ -82,14 +82,14 @@ TEMPLATE_RESOURCE
 Defines where to find templates. Can be a filepath or a tuple of (package, directoryname). You must use the latter format if you want to deploy your application using a compressed or bundled distributable.
 The default value for this setting is defined in settings.py because the project name is required.
 
-Default: (projectname, 'templates') [package resource]
+Default: ``(projectname, 'templates')``
 
 ALLOW_DEFERREDS
 ^^^^^^^^^^^^^^^
 
 If enabled, views may return twisted deferred objects. The response will be returned to the browser when the deferred fires.
 
-Default: False
+Default: ``False``
 
 
 ICON_RESOURCE
@@ -104,14 +104,14 @@ WINDOW_TITLE
 
 Title to be displayed in the browser window. Adding a ``<title></title>`` tag to your HTML page won't affect this.
 
-Default: "Scandium Browser"
+Default: ``"Scandium Browser"``
 
 WINDOW_GEOMETRY
 ^^^^^^^^^^^^^^^
 
 Size and position for the application window, specified as ``(x, y, width, height)``.
 
-Default: (100, 100, 800, 500)
+Default: ``(100, 100, 800, 500)``
 
 
 Custom Settings
