@@ -1,0 +1,7 @@
+Scandium Readme
+
+TODO:
+- write script that creates standard project structure, a-la django
+- install this script into 'bin' folder during pip/easy_installation
+
+
