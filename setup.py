@@ -19,9 +19,9 @@ PACKAGE_DATA = find_package_data(NAME, *PACKAGE_DATA_DIRS)
 
 AUTHOR = "Matt Bennett"
 EMAIL = "matt.bennett@inmarsat.com"
-KEYWORDS = "scandium web desktop application"
-DESCRIPTION = "A toolkit for transformation webapps into "\
-              "desktop applications under QtWebKit."
+KEYWORDS = "scandium web desktop application titanium"
+DESCRIPTION = "Titanium Desktop replacement. A toolkit for transformation of" \
+              " python webapps into desktop applications under QtWebKit."
 LICENSE = "BSD"
 
 extra_cfg = {}
