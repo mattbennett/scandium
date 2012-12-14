@@ -1,6 +1,4 @@
 import os
-import sys
-import fnmatch
 from setuptools import setup, find_packages
 
 
@@ -8,16 +6,16 @@ def find_package_data(package, *paths):
     data = {package: []}
     for path in paths:
         for root, _, filenames in os.walk(os.path.join(package, path)):
-            for filename in filenames:
-                pkg_path = os.path.join(os.path.relpath(root, package))
-                data[package].append(pkg_path, filename)
+            for fname in filenames:
+                pkg_path = os.path.join(os.path.relpath(root, package), fname)
+                data[package].append(pkg_path)
     return data
     
 NAME = "scandium"
 VERSION = '0.0.1'
 PACKAGES = find_packages(exclude="tests")
 PACKAGE_DATA_DIRS = ('tpl',)
-PACKAGE_DATA = find_package_data((NAME,) + PACKAGE_DATA_DIRS)
+PACKAGE_DATA = find_package_data(NAME, *PACKAGE_DATA_DIRS)
 
 AUTHOR = "Matt Bennett"
 EMAIL = "matt.bennett@inmarsat.com"
@@ -27,51 +25,6 @@ DESCRIPTION = "A toolkit for transformation webapps into "\
 LICENSE = "BSD"
 
 extra_cfg = {}
-
-if 'py2exe' in sys.argv:
-    import py2exe
-    from py2exe.build_exe import py2exe as build_exe
-    from distutils.sysconfig import get_python_lib
-
-    #embedding package_data in py2exe's distributable
-    #see: http://crazedmonkey.com/blog/python/pkg_resources-with-py2exe.html
-    class MediaCollector(build_exe):
-        def copy_extensions(self, extensions):
-            build_exe.copy_extensions(self, extensions)
-            
-            def collect_from(path):
-                for root, _, filenames in os.walk(path):
-                    for fname in fnmatch.filter(filenames, '*'):
-                        parent = os.path.join(self.collect_dir, root)
-                        if not os.path.exists(parent):
-                            self.mkpath(parent)
-                        self.copy_file(os.path.join(root, fname), \
-                                       os.path.join(parent, fname))
-                        self.compiled_files.append(os.path.join(root, fname))
-            for dname in PACKAGE_DATA_DIRS:
-                collect_from(os.path.join(NAME, dname))
-                collect_from(os.path.join(NAME, dname))
-    
-    path = os.path.join(get_python_lib(), 'PySide', 'plugins', 'imageformats')
-    imageformats = []
-    for dll in os.listdir(path):
-        imageformats.append(os.path.join(path, dll))
-    
-    path = os.path.join(get_python_lib(), 'PySide')
-    qt = []
-    for dll in ("QtCore4.dll", "QtGui4.dll", "QtNetwork4.dll"):
-        qt.append(os.path.join(path, dll))
-    
-    extra_cfg.update({
-        'cmdclass': {'py2exe': MediaCollector},
-        'console': [{
-            'script': '%s/config/run.py' % NAME,
-            'icon_resources': [(1, '%s/static/icons/icon.ico' % NAME)]
-        }],
-        'zipfile': None,
-        'data_files': [('imageformats', imageformats), ('', qt)]
-    })
-
 
 
 setup(
@@ -85,16 +38,17 @@ setup(
     packages = PACKAGES,
     package_data = PACKAGE_DATA,
     include_package_data = True,
-    classifiers=[
+    zip_safe = False,
+    classifiers = [
         #
     ],
     dependency_links = [
-        "https://github.com/ghtdak/qtreactor/tarball/master#egg-qt4reactor-1.0"
+        "https://github.com/ghtdak/qtreactor/zipball/master#egg=qt4reactor-1.0"
     ],
     scripts = ['bin/scadmin.py'],
-    install_requires=[
+    install_requires = [
         "twisted",
-        "qt4reactor",
+        "qt4reactor>=1.0",
         "flask",
         "PySide", #best to install this manually - pip isn't so hot at it
     ],
