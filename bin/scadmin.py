@@ -106,13 +106,15 @@ def create(options, project_name, target=None):
             # Render .pyt files using string subsitutions
             context = dict({'project_name': project_name}, **options.__dict__)
 
-            with open(old_path, 'r') as template_file:
+            with open(old_path, 'rb') as template_file:
                 content = template_file.read()
             if filename.endswith("pyt"):
-                for match, sub in context.items():
-                    content = re.sub("{{%s}}" % match, sub, content)
+                while re.search("{{.*}}", content):
+                    sub = re.search("{{(.*?)}}", content).group(1)
+                    content = re.sub("{{%s}}" % sub, context.get(sub, ""), \
+                                     content)
                 new_path = new_path[:-1]  # drop the 't' from the file ext
-            with open(new_path, 'w') as new_file:
+            with open(new_path, 'wb') as new_file:
                 new_file.write(content)
 
             try:
@@ -137,6 +139,10 @@ if __name__ == "__main__":
                       dest="email",
                       default="",
                       help="Email Address")
+    parser.add_option("-V", "--version",
+                      dest="version",
+                      default="",
+                      help="Application Version")
     parser.add_option("-k", "--keywords",
                       dest="keywords",
                       default="",

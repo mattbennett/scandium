@@ -24,8 +24,6 @@ DESCRIPTION = "Titanium Desktop replacement. A toolkit for transformation of" \
               " python webapps into desktop applications under QtWebKit."
 LICENSE = "BSD"
 
-extra_cfg = {}
-
 
 setup(
     name = NAME,
@@ -43,14 +41,16 @@ setup(
         #
     ],
     dependency_links = [
-        "https://github.com/ghtdak/qtreactor/zipball/master#egg=qt4reactor-1.0"
+        # setuptools will install from list link, but do so as a zipped egg.
+        # py2exe can't import qt4reactor from a zip, so building your scandium
+        # into an exe will fail. Installing qt4reactor manually is recommended.
+        #"https://github.com/ghtdak/qtreactor/zipball/master#egg=qt4reactor-1.0"
     ],
     scripts = ['bin/scadmin.py'],
     install_requires = [
-        "twisted",
-        "qt4reactor>=1.0",
+        "twisted",              # manual install recommended
+        "qt4reactor>=1.0",      # manual install recommended
         "flask",
-        "PySide", #best to install this manually - pip isn't so hot at it
-    ],
-    **extra_cfg
+        "PySide",               # manual install recommended
+    ]
 )
