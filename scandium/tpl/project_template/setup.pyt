@@ -12,13 +12,17 @@ if len(sys.argv) == 1:
     sys.argv.append("-q")
 
 ################################################################
+# Customize these variables
 
-
-NAME = "{{name}}"
+NAME = "{{project_name}}"
 VERSION = "{{version}}"
 DESCRIPTION = "{{description}}"
 COMPANY_NAME = "{{company_name}}"
 LICENSE = "{{license}}"
+
+# Fiddle with these variables if you use Python modules that
+# py2exe can't find, or you change the location of static
+# and template data.
 
 INCLUDES = ['jinja2.ext', 'PySide.QtNetwork']
 EXCLUDES = ["Tkconstants", "Tkinter", "tcl"]
@@ -29,11 +33,12 @@ PACKAGE_DATA_DIRS = ('static', 'templates')
 ################################################################
 # A program using PySide
 
-# The manifest will be inserted as resource into test_wx.exe.  This
-# gives the controls the Windows XP appearance (if run on XP ;-)
+# The manifest will be inserted as resource into {{project_name}}.exe.  This
+# gives the controls the Windows XP appearance (if run on XP ;-) and
+# ensures the Visual C++ Redistributable Package DLLs get found.
 #
 # Another option would be to store it in a file named
-# {{name}}.exe.manifest, and copy it with the data_files option into
+# {{project_name}}.exe.manifest, and copy it with the data_files option into
 # the dist-dir.
 #
 manifest_template = '''
@@ -42,10 +47,10 @@ manifest_template = '''
 <assemblyIdentity
     version="5.0.0.0"
     processorArchitecture="x86"
-    name="{{name}}"
+    name="{{project_name}}"
     type="win32"
 />
-<description>{{name}} Program</description>
+<description>{{project_name}} Program</description>
 <dependency>
     <dependentAssembly>
         <assemblyIdentity
@@ -146,6 +151,7 @@ setup(
                           "packages": PACKAGES,
                           "includes": INCLUDES,
                           "excludes": EXCLUDES,
+                          # exclude the Qt4 DLLs to ensure the data_files version gets used, otherwise image processing will fail
                           "dll_excludes": ['msvcp90.dll', 'w9xpopen.exe', "QtCore4.dll", "QtGui4.dll", "QtNetwork4.dll"]}},
     zipfile = None,
     windows = [app],

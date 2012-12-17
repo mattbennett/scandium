@@ -13,7 +13,9 @@ Scandium depends on:
  - PySide
  - py2exe
 
-The most hassle-free installation method is to download and install twisted, PySide and py2exe separately. Setuptools will take care of the other dependencies.
+The most hassle-free installation method is to download and install twisted, qt4reactor, PySide and py2exe separately. Setuptools will install Flask for you.
+
+
 
 Creating a Project
 ==================
@@ -77,7 +79,7 @@ The default value for this setting is defined in settings.py because the project
 Default: ``(projectname, 'static')``
 
 TEMPLATE_RESOURCE
-^^^^^^^^^^^^^
+^^^^^^^^^^^^^^^^^
 
 Defines where to find templates. Can be a filepath or a tuple of (package, directoryname). You must use the latter format if you want to deploy your application using a compressed or bundled distributable.
 The default value for this setting is defined in settings.py because the project name is required.
@@ -123,4 +125,18 @@ It is possible to define custom settings in ``settings.py`` for use in your web 
 Building with py2exe
 ====================
 
-TODO
+The template project layout includes a ``setup.py`` file that will generate an executable using ``py2exe`` when invoked. Running ``python setup.py py2exe`` will generate a ``dist`` directory containing:::
+
+ - projectname.exe
+ - QtGui4.dll
+ - QtNetwork4.dll
+ - QtCore4.dll
+ \ - imageformats
+   | - qgif4.dll
+   | - qjpeg4.dll
+   | - qsvg4.dll
+   ...
+   
+The Qt4 DLLs and ``imageformats`` formats directory need to be there for image processing support. I can't figure out how to embed them inside the executable, so you need to distribute this whole directory.
+
+Target machines must have the Microsoft Visual C++ Redistributable installed, available from http://www.microsoft.com/en-us/download/confirmation.aspx?id=29
