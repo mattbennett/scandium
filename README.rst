@@ -5,9 +5,9 @@ Scandium
 Introduction
 ============
 
-Scandium is a replacement for Appcelerator's `Titanium Desktop <http://developer.appcelerator.com/blog/2012/01/the-future-of-titanium-desktop.html>` that enables deployment of Python web applications on the desktop.
+Scandium is a replacement for Appcelerator's `Titanium Desktop <http://developer.appcelerator.com/blog/2012/01/the-future-of-titanium-desktop.html>`__ that enables deployment of Python web applications on the desktop.
 
-A scandium app is basically just a `Flask <http://flask.pocoo.org/>` app inside a chromeless QtWebKit widget.
+A scandium app is basically just a `Flask <http://flask.pocoo.org/>`__ app inside a chromeless QtWebKit widget.
 
 Installation
 ============
